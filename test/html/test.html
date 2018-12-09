@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body onload="xuanze1()">
+    <table>
+        <div onclick="xuanze1()"  id="mark">
+            <span>1.</span>
+            <br/>
+            <input type="radio" name="test_1" value=0/>
+            <span id="text_1_a"></span>
+            <br/>
+            <input type="radio" name="test_1" value=100/>
+            <span id="text_1_b"></span>
+            <br/>
+            <input type="radio" name="test_1" value=0/>
+            <span id="text_1_c"></span>
+            <br/>
+            <input type="radio" name="test_1" value=0/>
+            <span id="text_1_d"></span>
+        </div>
+        <br/>
+        <div>
+            <input type="button" value="交卷" onclick="jiaojuan()"/>
+        </div>
+
+    </table>
+    <script>
+        function xuanze1(){
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange=function(){
+                if(xhr.readyState == 4 & xhr.status == 200){
+                    var result = xhr.responseText;
+                    var str = JSON.parse(result);
+                    text_1_a.innerHTML=str[0].text_a;
+                    text_1_b.innerHTML=str[0].text_b;
+                    text_1_c.innerHTML=str[0].text_c;
+                    text_1_d.innerHTML=str[0].text_d;
+
+                }
+            }
+            xhr.open("get","/test/shiti",true);
+            xhr.send(null);
+        }
+    function jiaojuan(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 & xhr.status == 200){
+                var result = xhr.responseText;
+                if(result == "1"){
+                    alert("提交成功");
+                }
+            }
+        }
+        xhr.open("get","/test/mark?mark="+mark.value,true);
+        xhr.send(null);
+    }
+    </script>
+</body>
+</html>
